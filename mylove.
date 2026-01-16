@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday ❤️</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+  <style>
+    .heart { position: fixed; top: -10px; font-size: 20px; animation: fall 6s linear infinite; }
+    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-pink-300 via-rose-300 to-red-300 min-h-screen overflow-hidden">
+
+  <!-- Floating Hearts -->
+  <div id="hearts"></div>
+
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div id="card" class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-10 max-w-xl w-full text-center">
+      <h1 class="text-5xl font-extrabold text-rose-600 mb-4">Happy Birthday 🎉</h1>
+      <h2 class="text-3xl font-semibold text-gray-800 mb-6">My Beautiful Girl ❤️</h2>
+
+      <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80" 
+           alt="Us" class="rounded-2xl shadow-xl mb-6 mx-auto" />
+
+      <p class="text-gray-700 text-lg mb-4">
+        Today isn’t just your birthday. It’s the day the world got more beautiful.
+      </p>
+
+      <p class="text-gray-700 mb-6">
+        You make my life brighter, louder, warmer, and a thousand times better. 💖
+      </p>
+
+      <button onclick="reveal()" class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-full shadow-lg text-lg transition">
+        Tap for Something Special 🎁
+      </button>
+
+      <p id="surprise" class="mt-8 text-2xl font-bold text-rose-600 hidden"></p>
+    </div>
+  </div>
+
+  <script>
+    // Floating hearts
+    const heartsContainer = document.getElementById('hearts');
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 300);
+
+    // Reveal message
+    function reveal() {
+      const msg = document.getElementById('surprise');
+      msg.innerText = 'I love you more than yesterday and less than tomorrow ❤️';
+      msg.classList.remove('hidden');
+    }
+
+    // Entrance animation
+    const card = document.getElementById('card');
+    card.animate([
+      { transform: 'scale(0.8)', opacity: 0 },
+      { transform: 'scale(1)', opacity: 1 }
+    ], { duration: 800, easing: 'ease-out' });
+  </script>
+</body>
+</html>
