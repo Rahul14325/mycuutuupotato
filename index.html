@@ -108,6 +108,36 @@ body::before{
   margin-left:6px;
   color:#fde68a;
 }
+  /* 🌙 GLOBAL WHITE TEXT THEME */
+body,
+.hero p,
+.story p,
+.cta,
+.menu a,
+.footer,
+.story h3,
+.hero h1 {
+  color:#ffffff !important;
+}
+  /* 🔒 WISHES LOCK & COUNTDOWN FIX */
+#wishesLink{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:#ffffff !important;
+}
+
+#wishesLink.locked{
+  opacity:0.6;
+  cursor:not-allowed;
+}
+
+#wishesLink span{
+  font-size:14px;
+  font-weight:500;
+  color:#ffffff !important;
+  white-space:nowrap;
+}
 </style>
 </head>
 <body>
