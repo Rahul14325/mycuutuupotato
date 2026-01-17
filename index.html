@@ -41,9 +41,13 @@ body::before{
 
     /* NAV */
     .nav{
-      position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.2) blur(8px);
-      background:rgba(234,244,255,.75); border-bottom:1px solid rgba(0,0,0,.05)
-    }
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.55); /* 🔥 darker */
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
     .nav-inner{max-width:1200px; margin:auto; padding:18px 20px; display:flex; align-items:center; justify-content:space-between}
     .brand{font-family:Pacifico; font-size:34px; color:#1e88ff}
     .menu{display:flex; gap:28px; font-family:Playfair Display; font-size:18px}
