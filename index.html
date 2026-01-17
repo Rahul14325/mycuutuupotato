@@ -98,6 +98,16 @@ body::before{
 .timeline{display:grid;gap:24px;max-width:900px;margin:0 auto}
 .card{background:rgba(255,255,255,.08);border-radius:20px;padding:22px;backdrop-filter:blur(6px)}
 .music-btn{position:fixed;right:18px;bottom:18px;border-radius:999px;padding:14px 16px;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+#wishesLink.locked{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+#wishesLink span{
+  font-size:14px;
+  margin-left:6px;
+  color:#fde68a;
+}
 </style>
 </head>
 <body>
@@ -109,7 +119,9 @@ body::before{
         <a class="active" href="#home">Home</a>
         <a href="#memories">Memories</a>
         <a href="#moments">Moments</a>
-        <a href="#wishes" id="wishesLink">Wishes 🎉</a>
+        <a href="#wishes" id="wishesLink">
+  🔒 Wishes <span id="countdown"></span>
+</a>
       </div>
     </div>
   </nav>
@@ -302,6 +314,46 @@ function animateFireworks() {
   requestAnimationFrame(animateFireworks);
 }
 animateFireworks();
+</script>
+  <script>
+const wishesLink = document.getElementById("wishesLink");
+const countdownEl = document.getElementById("countdown");
+
+// 🎯 TARGET: Jan 19, 12:00 AM
+const unlockTime = new Date(2026, 0, 19, 0, 0, 0); 
+// year, month(0=Jan), day, hour, min, sec
+
+function updateWishesLock() {
+  const now = new Date();
+  const diff = unlockTime - now;
+
+  if (diff <= 0) {
+    // 🔓 UNLOCK
+    wishesLink.classList.remove("locked");
+    wishesLink.style.pointerEvents = "auto";
+    countdownEl.textContent = "🎉";
+    wishesLink.title = "Unlocked!";
+    return;
+  }
+
+  // 🔒 LOCKED
+  wishesLink.classList.add("locked");
+  wishesLink.style.pointerEvents = "none";
+  wishesLink.title = "Unlocks at 12:00 AM";
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  countdownEl.textContent =
+    `(${String(hours).padStart(2,"0")}:` +
+    `${String(minutes).padStart(2,"0")}:` +
+    `${String(seconds).padStart(2,"0")})`;
+}
+
+// RUN EVERY SECOND
+updateWishesLock();
+setInterval(updateWishesLock, 1000);
 </script>
 </body>
 </html>
