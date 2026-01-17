@@ -109,6 +109,7 @@ body::before{
         <a class="active" href="#home">Home</a>
         <a href="#memories">Memories</a>
         <a href="#moments">Moments</a>
+        <a href="#wishes" id="wishesLink">Wishes 🎉</a>
       </div>
     </div>
   </nav>
@@ -160,6 +161,25 @@ body::before{
       <div class="card fade"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="uni"></div>
     </div>
   </section>
+  <section id="wishes" class="hero">
+  <div class="glass reveal">
+    <h1>🎉 Birthday Wishes 🎉</h1>
+    <p>
+      At the exact moment the clock struck midnight,  
+      this page unlocked — just like another beautiful year of YOU.
+    </p>
+    <p>
+      May your life be filled with love, laughter, wild dreams,
+      quiet happiness, and moments that feel like magic ✨
+    </p>
+    <p>
+      You deserve everything beautiful — today and always 💙
+    </p>
+  </div>
+
+  <!-- FIREWORKS CANVAS -->
+  <canvas id="fireworks"></canvas>
+</section>
 
   <div class="footer">Thank you for being you. I love you. 💙</div>
 
@@ -178,6 +198,110 @@ const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.c
 reveals.forEach(r=>io.observe(r));
 const btn=document.getElementById('musicBtn');const audio=document.getElementById('bgm');
 btn.onclick=()=>{ if(audio.paused){audio.play();btn.textContent='❚❚ Music'} else {audio.pause();btn.textContent='▶︎ Music'} };
+</script>
+  <script>
+const wishesLink = document.getElementById("wishesLink");
+
+// SET TARGET TIME → Jan 19, 12:00 AM (midnight)
+const unlockTime = new Date();
+unlockTime.setFullYear(2026);      // ⚠️ change year if needed
+unlockTime.setMonth(0);            // January = 0
+unlockTime.setDate(19);
+unlockTime.setHours(0, 0, 0, 0);    // 12:00 AM
+
+function checkWishesAccess() {
+  const now = new Date();
+
+  if (now < unlockTime) {
+    wishesLink.style.opacity = "0.4";
+    wishesLink.style.pointerEvents = "none";
+    wishesLink.title = "Unlocks at 12:00 AM 💫";
+  } else {
+    wishesLink.style.opacity = "1";
+    wishesLink.style.pointerEvents = "auto";
+    wishesLink.title = "Happy Birthday 🎂";
+  }
+}
+
+checkWishesAccess();
+setInterval(checkWishesAccess, 1000);
+</script>
+  <script>
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+class Firework {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height;
+    this.targetY = Math.random() * canvas.height / 2;
+    this.radius = 2;
+    this.speed = Math.random() * 3 + 4;
+    this.exploded = false;
+    this.particles = [];
+  }
+
+  explode() {
+    for (let i = 0; i < 60; i++) {
+      this.particles.push({
+        x: this.x,
+        y: this.y,
+        vx: Math.cos(i) * Math.random() * 3,
+        vy: Math.sin(i) * Math.random() * 3,
+        life: 100
+      });
+    }
+  }
+
+  update() {
+    if (!this.exploded) {
+      this.y -= this.speed;
+      if (this.y <= this.targetY) {
+        this.exploded = true;
+        this.explode();
+      }
+    }
+  }
+
+  draw() {
+    if (!this.exploded) {
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      this.particles.forEach(p => {
+        ctx.fillStyle = "rgba(255,200,255,.8)";
+        ctx.fillRect(p.x, p.y, 2, 2);
+      });
+    }
+  }
+}
+
+let fireworks = [];
+
+function animateFireworks() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (Math.random() < 0.05) {
+    fireworks.push(new Firework());
+  }
+
+  fireworks.forEach(f => {
+    f.update();
+    f.draw();
+  });
+
+  requestAnimationFrame(animateFireworks);
+}
+animateFireworks();
 </script>
 </body>
 </html>
