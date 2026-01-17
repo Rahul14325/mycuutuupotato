@@ -102,16 +102,6 @@ body::before{
 .timeline{display:grid;gap:24px;max-width:900px;margin:0 auto}
 .card{background:rgba(255,255,255,.08);border-radius:20px;padding:22px;backdrop-filter:blur(6px)}
 .music-btn{position:fixed;right:18px;bottom:18px;border-radius:999px;padding:14px 16px;border:none;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-#wishesLink.locked{
-  opacity:0.5;
-  cursor:not-allowed;
-}
-
-#wishesLink span{
-  font-size:14px;
-  margin-left:6px;
-  color:#fde68a;
-}
 
 </style>
 </head>
@@ -200,17 +190,6 @@ body::before{
     },{threshold:.15});
     faders.forEach(el=>io.observe(el));
   </script>
-<audio id="bgm" src="https://cdn.pixabay.com/download/audio/2022/10/19/audio_6c68f0d4f4.mp3?filename=romantic-piano-121431.mp3" loop></audio>
-<button class="music-btn" id="musicBtn">▶︎ Music</button>
-<script>
-const reveals=[...document.querySelectorAll('.reveal')];
-const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('show')),{threshold:.2});
-reveals.forEach(r=>io.observe(r));
-const btn=document.getElementById('musicBtn');const audio=document.getElementById('bgm');
-btn.onclick=()=>{ if(audio.paused){audio.play();btn.textContent='❚❚ Music'} else {audio.pause();btn.textContent='▶︎ Music'} };
-</script>
-  <script>
-const wishesLink = document.getElementById("wishesLink");
 
 
 </script>
